@@ -6,6 +6,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(_('email address'), unique=True)
     bio = models.CharField(blank=True, max_length=100, null=True)
     image = models.CharField(max_length=255, null=True)
+    follows = models.ManyToManyField('self', symmetrical=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('username',)
