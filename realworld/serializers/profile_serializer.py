@@ -15,11 +15,17 @@ class ProfileSerializer(serializers.ModelSerializer):
         return super().to_internal_value(resource_data)
 
     def to_representation(self, instance):
+        logged_in_user = self.context['request'].user
+        following = False
+        if logged_in_user.is_authenticated:
+            following = logged_in_user.follows.filter(username=instance.username).exists();
+
         return {
             'profile': {
                 'email': instance.email,
                 'username': instance.username,
                 'bio': instance.bio,
                 'image': instance.image,
+                'following': following,
             }
         }

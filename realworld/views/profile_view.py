@@ -10,13 +10,7 @@ class ProfileView(APIView):
 
         user = CustomUser.objects.filter(username=username).first()
         if user is not None:
-            profile_serializer = ProfileSerializer(user)
-            profile_serializer.data['profile']['following'] = False
-
-            if logged_in_user.is_authenticated:
-                if logged_in_user.follows.filter(username=user.username).exists():
-                    profile_serializer.data['profile']['following'] = True
-
+            profile_serializer = ProfileSerializer(user, context={'request': request})
             return Response(profile_serializer.data, status=status.HTTP_200_OK)
         else:
             return Response({
