@@ -1,1 +1,2 @@
-from .login import LoginView
+from .login_view import LoginView
+from .user_view import UserView

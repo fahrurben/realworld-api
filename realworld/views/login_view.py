@@ -1,7 +1,7 @@
 from rest_framework.views import APIView, Response, status
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from realworld.serializers import LoginSerializer
+from realworld.serializers import LoginSerializer, UserSerializer
 from realworld.models import CustomUser
 
 class LoginView(APIView):
@@ -20,7 +20,12 @@ class LoginView(APIView):
 
             refresh = RefreshToken.for_user(user)
 
+            user_serializer = UserSerializer(user)
+            user_serializer.data['user']['token'] = str(refresh.access_token)
+
+            return Response(user_serializer.data,  status=status.HTTP_200_OK)
+        else:
             return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            },  status=status.HTTP_200_OK)
+                'message': serializer.errors,
+                'data': None
+            }, status=status.HTTP_400_BAD_REQUEST)
