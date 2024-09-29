@@ -2,3 +2,5 @@ from .login_serializer import LoginSerializer
 from .register_serializer import RegisterSerializer
 from .user_serializer import UserSerializer
 from .profile_serializer import ProfileSerializer
+from .article_serializer import ArticleSerializer
+from .author_serializer import AuthorSerializer

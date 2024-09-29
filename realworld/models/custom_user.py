@@ -7,6 +7,7 @@ class CustomUser(AbstractUser):
     bio = models.CharField(blank=True, max_length=100, null=True)
     image = models.CharField(max_length=255, null=True)
     follows = models.ManyToManyField('self', symmetrical=False)
+    favorite_articles = models.ManyToManyField("Article", related_name="favorites_by")
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ('username',)
