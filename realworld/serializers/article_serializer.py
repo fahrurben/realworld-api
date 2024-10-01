@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ValidationError
 from django.utils.text import slugify
-from django.db.models import Q
+from django.db.models import Q, query
 
 from realworld.models import Article, Tag
 from .author_serializer import AuthorSerializer
@@ -38,6 +38,10 @@ class ArticleSerializer(serializers.ModelSerializer):
         return super().to_internal_value(resource_data)
 
     def to_representation(self, instance):
+        print(type(self.instance))
+        if isinstance(self.instance, query.QuerySet):
+            return super().to_representation(instance)
+
         return {
             'article': super().to_representation(instance)
         }
