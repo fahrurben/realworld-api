@@ -16,8 +16,5 @@ class AuthorSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return {
-            'email': instance.email,
-            'username': instance.username,
-            'bio': instance.bio,
-            'image': instance.image,
+            'user': super().to_representation(instance)
         }

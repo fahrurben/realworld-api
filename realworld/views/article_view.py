@@ -1,13 +1,14 @@
 from rest_framework import viewsets
-from rest_framework.permissions import IsAuthenticated
 
 from realworld.serializers import ArticleSerializer
 from realworld.models import Article
+from realworld.permissions import AuthorUpdatePermission
 
 class ArticleView(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     queryset = Article.objects.all()
-    permission_classes = [IsAuthenticated]
+    lookup_field = 'slug'
+    permission_classes = [AuthorUpdatePermission]
 
     def get_serializer_context(self):
         context = super().get_serializer_context()

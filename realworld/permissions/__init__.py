@@ -1,0 +1,1 @@
+from .author_update_permission import AuthorUpdatePermission

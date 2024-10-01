@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from rest_framework.serializers import ValidationError
 from django.utils.text import slugify
+from django.db.models import Q
 
 from realworld.models import Article, Tag
 from .author_serializer import AuthorSerializer
@@ -20,6 +22,16 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = ('slug', 'title', 'description', 'body', 'createdAt', 'updatedAt', 'author', 'tagList', 'favorited', 'favoritesCount')
+
+    def validate_title(self, value):
+        slug = slugify(value)
+        q = Q(slug=slug)
+        if self.instance:
+            q &= ~Q(id=self.instance.id)
+
+        if Article.objects.filter(q).exists():
+            raise ValidationError('Article with same title already exist')
+        return value
 
     def to_internal_value(self, data):
         resource_data = data['article']
@@ -51,3 +63,10 @@ class ArticleSerializer(serializers.ModelSerializer):
             obj.tags.add(tag)
 
         return obj
+
+    def update(self, instance, validated_data):
+        instance.slug = slugify(validated_data.get('title', instance.title))
+        instance.title = validated_data.get('title', instance.title)
+        instance.body = validated_data.get('body', instance.body)
+        instance.save()
+        return instance
