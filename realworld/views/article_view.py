@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.views import Response, status
+from rest_framework.decorators import action
 from django.db.models import Q
 
 from realworld.serializers import ArticleSerializer
@@ -36,6 +37,21 @@ class ArticleView(viewsets.ModelViewSet):
             q &= Q(favorites_by__username=favorited)
 
         queryset = Article.objects.filter(q).order_by('-created_at').all()[offset:offset+limit]
+        serializer = ArticleSerializer(queryset, many=True)
+        return Response({
+            'articles': serializer.data
+        })
+
+    @action(detail=False)
+    def feed(self, request):
+        offset = int(self.request.query_params.get('offset', 0))
+        limit = int(self.request.query_params.get('limit', 20))
+
+        follows = request.user.follows.all()
+
+        q = Q(author__in=follows)
+
+        queryset = Article.objects.filter(q).order_by('-created_at').all()[offset:offset + limit]
         serializer = ArticleSerializer(queryset, many=True)
         return Response({
             'articles': serializer.data
