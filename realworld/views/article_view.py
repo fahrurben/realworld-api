@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from rest_framework.views import Response, status
 from rest_framework.decorators import action
 from django.db.models import Q
+from django.http import JsonResponse
 
 from realworld.serializers import ArticleSerializer
 from realworld.models import Article
@@ -56,3 +57,27 @@ class ArticleView(viewsets.ModelViewSet):
         return Response({
             'articles': serializer.data
         })
+
+    @action(detail=True, methods=['POST'], name='favorite_article')
+    def favorite(self, request, slug):
+        current_user = request.user
+        article = Article.objects.filter(slug=slug).first()
+
+        if article is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        current_user.favorite_articles.add(article)
+        serializer = ArticleSerializer(article)
+        return JsonResponse(serializer.data, status=201)
+
+    @favorite.mapping.delete
+    def unfavorite(self, request, slug):
+        current_user = request.user
+        article = Article.objects.filter(slug=slug).first()
+
+        if article is None:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        current_user.favorite_articles.remove(article)
+        serializer = ArticleSerializer(article)
+        return JsonResponse(serializer.data, status=201)

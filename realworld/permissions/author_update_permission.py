@@ -18,6 +18,9 @@ class AuthorUpdatePermission(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
+        if request.name == 'favorite_article':
+            return True
+
         if obj.author == request.user:
             return True
 
