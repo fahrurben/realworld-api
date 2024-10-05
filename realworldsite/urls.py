@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 
-from realworld.views import LoginView, UserView, ProfileView, FollowProfileView, ArticleView, CommentListView, CommentDetailsView
+from realworld.views import LoginView, UserView, ProfileView, FollowProfileView, ArticleView, CommentListView, CommentDetailsView, TagListView
 
 router = routers.SimpleRouter(trailing_slash=False)
 router.register(r'articles', ArticleView)
@@ -31,6 +31,7 @@ urlpatterns = [
     path('api/profiles/<username>', ProfileView.as_view(), name='profiles'),
     path('api/articles/<slug>/comments', CommentListView.as_view(), name='comments'),
     path('api/articles/<slug>/comments/<int:pk>', CommentDetailsView.as_view(), name='comment'),
+    path('api/tags', TagListView.as_view(), name='tags'),
 
     path('api/', include(router.urls)),
 

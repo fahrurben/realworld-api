@@ -5,3 +5,4 @@ from .follow_profile_view import FollowProfileView
 from .article_view import ArticleView
 from .comment_list_view import CommentListView
 from .comment_details_view import CommentDetailsView
+from .tag_list_view import TagListView
