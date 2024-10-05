@@ -4,3 +4,4 @@ from .user_serializer import UserSerializer
 from .profile_serializer import ProfileSerializer
 from .article_serializer import ArticleSerializer
 from .author_serializer import AuthorSerializer
+from .comment_serializer import CommentSerializer

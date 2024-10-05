@@ -38,7 +38,6 @@ class ArticleSerializer(serializers.ModelSerializer):
         return super().to_internal_value(resource_data)
 
     def to_representation(self, instance):
-        print(type(self.instance))
         if isinstance(self.instance, query.QuerySet):
             return super().to_representation(instance)
 
