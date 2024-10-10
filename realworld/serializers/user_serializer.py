@@ -4,7 +4,7 @@ from realworld.models import CustomUser
 
 class UserSerializer(serializers.ModelSerializer):
     token = serializers.CharField(max_length=1000, read_only=True)
-    password = serializers.CharField(min_length=6, max_length=1000)
+    password = serializers.CharField(min_length=6, max_length=1000, write_only=True)
 
     class Meta:
         model = CustomUser

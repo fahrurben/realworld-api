@@ -38,9 +38,11 @@ class ArticleView(viewsets.ModelViewSet):
             q &= Q(favorites_by__username=favorited)
 
         queryset = Article.objects.filter(q).order_by('-created_at').all()[offset:offset+limit]
+        queryCount = Article.objects.filter(q).count()
         serializer = ArticleSerializer(queryset, many=True)
         return Response({
-            'articles': serializer.data
+            'articles': serializer.data,
+            'articlesCount': queryCount,
         })
 
     @action(detail=False)
@@ -53,9 +55,12 @@ class ArticleView(viewsets.ModelViewSet):
         q = Q(author__in=follows)
 
         queryset = Article.objects.filter(q).order_by('-created_at').all()[offset:offset + limit]
+        queryCount = Article.objects.filter(q).count()
+
         serializer = ArticleSerializer(queryset, many=True)
         return Response({
-            'articles': serializer.data
+            'articles': serializer.data,
+            'articlesCount': queryCount,
         })
 
     @action(detail=True, methods=['POST'], name='favorite_article')
