@@ -39,7 +39,7 @@ class UserView(APIView):
             return Response({}, status=status.HTTP_401_UNAUTHORIZED)
 
         user = request.user
-        serializer = UserSerializer(data=request.data, partial=True)
+        serializer = UserSerializer(instance=user, data=request.data, partial=True)
         if serializer.is_valid():
             if 'password' in serializer.validated_data:
                 user.set_password(serializer.validated_data.pop('password'))
