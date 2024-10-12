@@ -17,9 +17,8 @@ class Article(models.Model):
     def __str__(self):
         return self.title
 
-    @property
-    def favorited(self):
-        return self.favorites_by.exists()
+    def favorited(self, user):
+        return self.favorites_by.filter(id=user.id).exists()
 
     @property
     def favorites_count(self):

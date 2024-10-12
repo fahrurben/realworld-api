@@ -39,7 +39,7 @@ class ArticleView(viewsets.ModelViewSet):
 
         queryset = Article.objects.filter(q).order_by('-created_at').all()[offset:offset+limit]
         queryCount = Article.objects.filter(q).count()
-        serializer = ArticleSerializer(queryset, many=True)
+        serializer = ArticleSerializer(queryset, many=True, context={"request": self.request})
         return Response({
             'articles': serializer.data,
             'articlesCount': queryCount,
@@ -57,7 +57,7 @@ class ArticleView(viewsets.ModelViewSet):
         queryset = Article.objects.filter(q).order_by('-created_at').all()[offset:offset + limit]
         queryCount = Article.objects.filter(q).count()
 
-        serializer = ArticleSerializer(queryset, many=True)
+        serializer = ArticleSerializer(queryset, many=True, context={"request": self.request})
         return Response({
             'articles': serializer.data,
             'articlesCount': queryCount,
@@ -72,7 +72,7 @@ class ArticleView(viewsets.ModelViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         current_user.favorite_articles.add(article)
-        serializer = ArticleSerializer(article)
+        serializer = ArticleSerializer(article, context={"request": self.request})
         return JsonResponse(serializer.data, status=201)
 
     @favorite.mapping.delete
@@ -84,5 +84,5 @@ class ArticleView(viewsets.ModelViewSet):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         current_user.favorite_articles.remove(article)
-        serializer = ArticleSerializer(article)
+        serializer = ArticleSerializer(article, context={"request": self.request})
         return JsonResponse(serializer.data, status=201)

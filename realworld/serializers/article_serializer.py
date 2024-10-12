@@ -16,12 +16,11 @@ class ArticleSerializer(serializers.ModelSerializer):
         many=True,
         queryset = Tag.objects.all()
     )
-    favorited = serializers.ReadOnlyField()
     favoritesCount = serializers.ReadOnlyField(source='favorites_count')
 
     class Meta:
         model = Article
-        fields = ('slug', 'title', 'description', 'body', 'createdAt', 'updatedAt', 'author', 'tagList', 'favorited', 'favoritesCount')
+        fields = ('slug', 'title', 'description', 'body', 'createdAt', 'updatedAt', 'author', 'tagList', 'favoritesCount')
 
     def validate_title(self, value):
         slug = slugify(value)
@@ -38,11 +37,20 @@ class ArticleSerializer(serializers.ModelSerializer):
         return super().to_internal_value(resource_data)
 
     def to_representation(self, instance):
+        current_user = self.context['request'].user
+        favorited = instance.favorited(current_user)
+
         if isinstance(self.instance, query.QuerySet):
-            return super().to_representation(instance)
+            return {
+                **super().to_representation(instance),
+                'favorited': favorited,
+            }
 
         return {
-            'article': super().to_representation(instance)
+            'article': {
+                **super().to_representation(instance),
+                'favorited': favorited,
+            }
         }
 
     def run_validation(self, data=serializers.empty):
