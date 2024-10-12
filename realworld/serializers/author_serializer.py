@@ -9,12 +9,3 @@ class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('email', 'token', 'username', 'password', 'bio', 'image')
-
-    def to_internal_value(self, data):
-        resource_data = data['user']
-        return super().to_internal_value(resource_data)
-
-    def to_representation(self, instance):
-        return {
-            'user': super().to_representation(instance)
-        }
