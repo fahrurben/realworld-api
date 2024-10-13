@@ -9,3 +9,12 @@ class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('email', 'token', 'username', 'password', 'bio', 'image')
+
+    def to_representation(self, instance):
+        current_user = self.context['request'].user
+        following = instance.following(current_user)
+
+        return {
+            **super().to_representation(instance),
+            'following': following
+        }
