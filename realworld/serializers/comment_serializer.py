@@ -8,7 +8,7 @@ class CommentSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     createdAt = serializers.DateTimeField(source='created_at', read_only=True)
     updatedAt = serializers.DateTimeField(source='updated_at', read_only=True)
-    author = AuthorSerializer(read_only=True)
+    author = AuthorSerializer(read_only=True, context={'request'})
 
     class Meta:
         model = Comment
