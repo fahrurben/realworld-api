@@ -1,0 +1,316 @@
+{
+	"info": {
+		"_postman_id": "8d06049d-43b0-4ba9-ac79-09f939b89f56",
+		"name": "Realworld",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "5173342"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": {\r\n        \"email\": \"user01@test.com\",\r\n        \"password\": \"secret123\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{APIURL}}/users/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": {\r\n        \"username\": \"user01\",\r\n        \"email\": \"user01@test.com\",\r\n        \"password\": \"secret123\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{APIURL}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "User Get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{APIURL}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "User Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"user\": {\r\n        \"password\": \"secret12345\",\r\n        \"bio\": \"test\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{APIURL}}/users"
+			},
+			"response": []
+		},
+		{
+			"name": "Profile Get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzI3NTgzNTU1LCJpYXQiOjE3Mjc0OTcxNTUsImp0aSI6IjQ3ZTJlYjNjZTNhODQ5NGQ5NjdkZjg2NzkwMDNiZmZiIiwidXNlcl9pZCI6MX0.QEzgxYoNFZlEnpfWk2Al3Je_WMPI2lry4_X5Ssi7k9o"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{APIURL}}/profiles/admin"
+			},
+			"response": []
+		},
+		{
+			"name": "Follow Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "{{APIURL}}/profiles/admin/follow"
+			},
+			"response": []
+		},
+		{
+			"name": "Unfollow Profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{APIURL}}/profiles/admin/follow"
+			},
+			"response": []
+		},
+		{
+			"name": "Article Create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"article\": {\r\n        \"title\": \"Article 11\",\r\n        \"description\": \"Article desc\",\r\n        \"body\": \"Article body\",\r\n        \"tagList\": [\"test\", \"test2\"]\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{APIURL}}/articles"
+			},
+			"response": []
+		},
+		{
+			"name": "Article Get",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{APIURL}}/articles/article-1"
+			},
+			"response": []
+		},
+		{
+			"name": "Article Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"article\": {\r\n        \"title\": \"Article 1\",\r\n        \"description\": \"Article desc\",\r\n        \"body\": \"Article body\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{APIURL}}/articles/article-1"
+			},
+			"response": []
+		},
+		{
+			"name": "Article Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{APIURL}}/articles/article-1"
+			},
+			"response": []
+		},
+		{
+			"name": "Articles List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{APIURL}}/articles"
+			},
+			"response": []
+		},
+		{
+			"name": "Comment Create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"comment\": {\r\n        \"body\": \"lorem\"\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{APIURL}}/articles/article-1/comments"
+			},
+			"response": []
+		},
+		{
+			"name": "Comment List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{APIURL}}/articles/article-1/comments"
+			},
+			"response": []
+		},
+		{
+			"name": "Comment Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{APIURL}}/articles/article-1/comments/4"
+			},
+			"response": []
+		},
+		{
+			"name": "Article Favorite",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"url": "{{APIURL}}/articles/article-1/favorite"
+			},
+			"response": []
+		},
+		{
+			"name": "Article Unfavorite",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "{{token}}"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "{{APIURL}}/articles/article-1/favorite"
+			},
+			"response": []
+		},
+		{
+			"name": "Tag List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{APIURL}}/tags"
+			},
+			"response": []
+		}
+	]
+}
